@@ -1,0 +1,114 @@
+package com.example.weather
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import kotlinx.coroutines.delay
+import androidx.compose.ui.Alignment
+
+@Composable
+fun WeatherScreen(viewModel: WeatherViewModel) {
+    val weatherList by viewModel.weatherList.collectAsState()
+    val error by viewModel.error.collectAsState()
+    var cityName by remember { mutableStateOf("") }
+    var showError by remember { mutableStateOf(false) }
+
+    LaunchedEffect(error) {
+        if (error != null) {
+            showError = true
+            delay(3000)
+            showError = false
+        }
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = "Enter city name:",
+                color = Color.White
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = cityName,
+                onValueChange = { cityName = it },
+                label = { Text("City Name") }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(onClick = { viewModel.fetchWeather(cityName) }) {
+                Text("Get Weather")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            LazyColumn {
+                items(weatherList) { weather ->
+                    WeatherDataView(weather)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Divider(color = Color.Gray, thickness = 1.dp)
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
+        }
+
+        AnimatedVisibility(
+            visible = showError,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .background(Color.Red)
+                .padding(8.dp)
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            Box(
+                modifier = Modifier
+                    .background(Color.Red)
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = error ?: "",
+                    color = Color.White
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun WeatherDataView(weather: WeatherResponse) {
+    Column {
+        Text(text = "City: ${weather.name}", color = Color.White)
+        Text(text = "Country: ${weather.sys.country}", color = Color.White)
+        Text(text = "Coordinates: Lon ${weather.coord.lon}, Lat ${weather.coord.lat}", color = Color.White)
+        Text(text = "Weather: ${weather.weather.joinToString { "${it.main}: ${it.description}" }}", color = Color.White)
+        Text(text = "Temperature: ${weather.main.temp}°C", color = Color.White)
+        Text(text = "Feels Like: ${weather.main.feels_like}°C", color = Color.White)
+        Text(text = "Min Temperature: ${weather.main.temp_min}°C", color = Color.White)
+        Text(text = "Max Temperature: ${weather.main.temp_max}°C", color = Color.White)
+        Text(text = "Pressure: ${weather.main.pressure} hPa", color = Color.White)
+        Text(text = "Humidity: ${weather.main.humidity}%", color = Color.White)
+        Text(text = "Sea Level: ${weather.main.sea_level} hPa", color = Color.White)
+        Text(text = "Ground Level: ${weather.main.grnd_level} hPa", color = Color.White)
+        Text(text = "Visibility: ${weather.visibility} meters", color = Color.White)
+        Text(text = "Wind Speed: ${weather.wind.speed} m/s", color = Color.White)
+        Text(text = "Wind Direction: ${weather.wind.deg}°", color = Color.White)
+        Text(text = "Cloud Coverage: ${weather.clouds.all}%", color = Color.White)
+        Text(text = "Data Time: ${weather.dt}", color = Color.White)
+        Text(text = "Timezone Offset: ${weather.timezone} seconds from UTC", color = Color.White)
+        Text(text = "City ID: ${weather.id}", color = Color.White)
+    }
+}
