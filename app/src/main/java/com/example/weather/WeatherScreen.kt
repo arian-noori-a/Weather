@@ -1,5 +1,8 @@
 package com.example.weather
 
+
+
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,11 +15,17 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+
 
 @Composable
 fun WeatherScreen(viewModel: WeatherViewModel) {
+
     val weatherList by viewModel.weatherList.collectAsState()
     val error by viewModel.error.collectAsState()
     var cityName by remember { mutableStateOf("") }
@@ -25,30 +34,39 @@ fun WeatherScreen(viewModel: WeatherViewModel) {
     LaunchedEffect(error) {
         if (error != null) {
             showError = true
-            delay(3000)
+            delay(1000)
             showError = false
         }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(26.dp)) {
             Text(
                 text = "Enter city name:",
-                color = Color.White
+                color = Color.White,
+                fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
                 value = cityName,
                 onValueChange = { cityName = it },
-                label = { Text("City Name") }
+                label = { Text("Enter A City Name") },
+                modifier = Modifier.fillMaxWidth(0.95f)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
-            Button(onClick = { viewModel.fetchWeather(cityName) }) {
-                Text("Get Weather")
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(onClick = { viewModel.fetchWeather(cityName) }) {
+                    Text("Get Weather")
+                }
+                Button(onClick = {}) {
+                    Text("See Saved Weathers")
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -63,34 +81,34 @@ fun WeatherScreen(viewModel: WeatherViewModel) {
             }
         }
 
-        AnimatedVisibility(
-            visible = showError,
-            enter = fadeIn(),
-            exit = fadeOut(),
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .background(Color.Red)
-                .padding(8.dp)
-                .fillMaxWidth()
-                .wrapContentHeight()
+        AnimatedVisibility(visible = showError,
+            enter = fadeIn(), exit = fadeOut(),
+            modifier = Modifier.align(Alignment.Center)
+                .background(Color.Red).fillMaxWidth()
         ) {
             Box(
                 modifier = Modifier
-                    .background(Color.Red)
-                    .padding(16.dp)
+                    .padding(6.dp)
             ) {
-                Text(
-                    text = error ?: "",
-                    color = Color.White
+                Text(text = error?: "",
+                    color = Color.White,
+                    modifier = Modifier.align(Alignment.Center)
                 )
             }
         }
     }
 }
 
+
+
+
 @Composable
 fun WeatherDataView(weather: WeatherResponse) {
-    Column {
+
+    Column (
+        modifier = Modifier.fillMaxWidth()
+    ) {
+
         Text(text = "City: ${weather.name}", color = Color.White)
         Text(text = "Country: ${weather.sys.country}", color = Color.White)
         Text(text = "Coordinates: Lon ${weather.coord.lon}, Lat ${weather.coord.lat}", color = Color.White)
@@ -110,5 +128,8 @@ fun WeatherDataView(weather: WeatherResponse) {
         Text(text = "Data Time: ${weather.dt}", color = Color.White)
         Text(text = "Timezone Offset: ${weather.timezone} seconds from UTC", color = Color.White)
         Text(text = "City ID: ${weather.id}", color = Color.White)
+        Button(onClick = {} , modifier = Modifier.align(Alignment.CenterHorizontally)) {
+            Text(text = "Save Weather")
+        }
     }
 }

@@ -7,26 +7,25 @@ import retrofit2.http.Query
 
 object ApiClient {
 
-    // The URL of the weather website which we will fetch our data:
+    // the URL of the weather website which we will fetch our data:
     private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
-    // The Retrofit instance used to create API service implementations:
+    // the Retrofit instance used to create API service implementations:
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    // Function to get the current weather information for a specified city:
+    // function to get the current weather information for a specified city:
     suspend fun getCurrentWeather(
         cityName: String,
-        apiKey: String,
-        units: String = "metric"
+        apiKey: String
     ): WeatherResponse {
         return retrofit.create(ApiService::class.java)
-            .getCurrentWeather(cityName, apiKey, units)
+            .getCurrentWeather(cityName, apiKey, "metrics")
     }
 
-    // Interface defining the API endpoints and their parameters:
+    // interface defining the API endpoints and their parameters:
     private interface ApiService {
         @GET("weather")
         suspend fun getCurrentWeather(
@@ -35,4 +34,5 @@ object ApiClient {
             @Query("units") units: String
         ): WeatherResponse
     }
+
 }

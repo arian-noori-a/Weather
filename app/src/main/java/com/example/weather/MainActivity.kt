@@ -10,12 +10,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
-//The MainActivity class:
+
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //The personal key of the OpenWeatherMap website:
         val apiKey = "4e6b57fbb69ef616ce47bd9a4e88686f"
 
         setContent {
@@ -27,6 +26,7 @@ class MainActivity : ComponentActivity() {
                 }
                 WeatherScreen(viewModel)
             }
+
         }
     }
 }
