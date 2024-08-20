@@ -1,13 +1,14 @@
-package com.example.weather
+package com.example.weather.model
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import kotlin.jvm.java
 
 object ApiClient {
 
-
+    private const val KEY = "4e6b57fbb69ef616ce47bd9a4e88686f"
     private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
 
@@ -33,6 +34,10 @@ object ApiClient {
             @Query("appid") apiKey: String,
             @Query("units") units: String
         ): WeatherResponse
+    }
+
+    fun getKey(): String {
+        return KEY
     }
 
 }

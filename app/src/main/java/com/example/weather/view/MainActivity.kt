@@ -1,4 +1,4 @@
-package com.example.weather
+package com.example.weather.view
 
 
 import android.os.Bundle
@@ -9,13 +9,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.example.weather.model.ApiClient
 
 
 class MainActivity : ComponentActivity() {
 
     companion object {
         // The key which you get from the data holder website:
-        private const val API_KEY = "4e6b57fbb69ef616ce47bd9a4e88686f"
+        private val API_KEY = ApiClient.getKey()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

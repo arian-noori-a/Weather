@@ -1,13 +1,15 @@
-package com.example.weather
+package com.example.weather.viewModel
 
 
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.weather.model.WeatherResponse
+import com.example.weather.model.ApiClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-
+import kotlin.collections.plus
 
 
 class WeatherViewModel(private val apiKey: String) : ViewModel() {

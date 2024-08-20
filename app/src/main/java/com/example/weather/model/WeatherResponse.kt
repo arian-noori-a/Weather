@@ -1,4 +1,4 @@
-package com.example.weather
+package com.example.weather.model
 
 data class WeatherResponse(
     val coord: Coord,
