@@ -1,4 +1,4 @@
-package com.example.weather.view
+package com.example.weather
 
 
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.example.weather.model.ApiClient
+import com.example.weather.view.WeatherAppNavGraph
 
 
 class MainActivity : ComponentActivity() {
