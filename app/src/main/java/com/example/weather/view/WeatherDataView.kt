@@ -23,17 +23,14 @@ import kotlin.text.trimIndent
 @Composable
 fun WeatherDataView(weather: WeatherResponse) {
     val savedWeathers = CityData.savedWeathers
-    val weatherInfo = """
-        City: ${weather.name}
-        Hello
-        Temperature: ${weather.main.temp - 273}°C
-        Country: ${weather.sys.country}
-        Coordinates: Lon ${weather.coord.lon}, Lat ${weather.coord.lat}
-        Weather: ${weather.weather.joinToString { "${it.main}: ${it.description}" }}
-        Pressure: ${weather.main.pressure} hPa
-        Humidity: ${weather.main.humidity}%
-        Wind Speed: ${weather.wind.speed} m/s
-    """.trimIndent()
+    val weatherInfo = "City: ${weather.name}\n" +
+            "Temperature: ${weather.main.temp - 273}°C\n" +
+            "Country: ${weather.sys.country}\n" +
+            "Coordinates: Lon ${weather.coord.lon}, Lat ${weather.coord.lat}\n" +
+            "Weather: ${weather.weather.joinToString{"${it.main}: ${it.description}"}}\n" +
+            "Pressure: ${weather.main.pressure} hPa\n" +
+            "Humidity: ${weather.main.humidity}%\n" +
+            "Wind Speed: ${weather.wind.speed} m/s"
 
     val moreInfo = """
         Coordinates: Lon ${weather.coord.lon}, Lat ${weather.coord.lat}
