@@ -25,6 +25,7 @@ fun WeatherDataView(weather: WeatherResponse) {
     val savedWeathers = CityData.savedWeathers
     val weatherInfo = """
         City: ${weather.name}
+        Hello
         Temperature: ${weather.main.temp - 273}°C
         Country: ${weather.sys.country}
         Coordinates: Lon ${weather.coord.lon}, Lat ${weather.coord.lat}
@@ -53,7 +54,7 @@ fun WeatherDataView(weather: WeatherResponse) {
     var showMore by remember { mutableStateOf(false) }
 
     val displayedText = if (showMore) {
-        "$weatherInfo\n\n$moreInfo"
+        "$weatherInfo\n$moreInfo"
     } else {
         weatherInfo
     }
