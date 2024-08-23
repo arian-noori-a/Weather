@@ -26,6 +26,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.compose.runtime.collectAsState
 import com.example.weather.model.CityData
+import com.example.weather.ui.theme.LocalColoring
+import com.example.weather.ui.theme.LocalSpacing
 import com.example.weather.viewModel.WeatherViewModel
 import kotlin.toString
 
@@ -64,11 +66,11 @@ fun WeatherScreen(navController: NavController, apikey: String) {
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        Column(modifier = Modifier.padding(6.dp)) {
+        Column(modifier = Modifier.padding(LocalSpacing.current.small)) {
 
             Text(
                 text = "Enter the city you want to see its information:",
-                color = Color.White,
+                color = LocalColoring.current.ColourFull.textColor,
                 fontWeight = FontWeight.Bold
             )
 
@@ -79,7 +81,7 @@ fun WeatherScreen(navController: NavController, apikey: String) {
                 modifier = Modifier.fillMaxWidth(0.95f)
             )
 
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(LocalSpacing.current.small))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -102,15 +104,15 @@ fun WeatherScreen(navController: NavController, apikey: String) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(LocalSpacing.current.small))
 
             LazyColumn {
 
                 items(weatherList) { weather ->
                     WeatherDataView(weather)
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(LocalSpacing.current.small))
                     Divider(color = Color.Gray)
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(LocalSpacing.current.small))
                 }
 
             }
@@ -126,11 +128,11 @@ fun WeatherScreen(navController: NavController, apikey: String) {
         ) {
             Box(
                 modifier = Modifier
-                    .padding(6.dp)
+                    .padding(LocalSpacing.current.small)
             ) {
                 Text(
                     text = error.toString(),
-                    color = Color.White,
+                    color = LocalColoring.current.ColourFull.textColor,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }

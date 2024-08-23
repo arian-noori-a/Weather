@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Alignment
 import com.example.weather.model.CityData
 import com.example.weather.model.WeatherResponse
+import com.example.weather.ui.theme.LocalColoring
+import com.example.weather.ui.theme.LocalSpacing
 import kotlin.collections.joinToString
 import kotlin.text.trimIndent
 
@@ -65,12 +67,12 @@ fun WeatherDataView(weather: WeatherResponse) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .border(width = 2.dp, color = Color.Gray)
-            .padding(6.dp)
+            .border(width = LocalSpacing.current.extraSmall, color = Color.Gray)
+            .padding(LocalSpacing.current.small)
     ) {
         Text(
             text = displayedText,
-            color = Color.White
+            color = LocalColoring.current.ColourFull.textColor
         )
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -80,7 +82,7 @@ fun WeatherDataView(weather: WeatherResponse) {
             }) {
                 Text("Show More")
             }
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(LocalSpacing.current.small))
             Button(onClick = { savedWeathers.add(0, weatherInfo) }) {
                 Text("Save Weather")
             }
